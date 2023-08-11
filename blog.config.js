@@ -1,14 +1,155 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/zh/features/personality
 const BLOG = {
   AUTHOR: '黄色潜水艇', // 作者
-  BIO: '一个普通的P1大佬', // 作者简介
-  LINK: 'https://www.hsh199x.top/', // 网站地址
+  BIO: '一个普通的干饭人🍚'', // 作者简介
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.huangshh.fun/', // 网站地址
   KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
-  process.env.NOTION_PAGE_ID || 'ca3e03a028454c2a91245ce86e5e9439', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
+  process.env.NOTION_PAGE_ID || '94633de986d549179ca1b4675157b59f', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
+  // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
+  GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || 'Hi，我是一个程序员, Hi，我是一个打工人,Hi，我是一个干饭人,欢迎来到我的博客🎉',
+  
+  PSEUDO_STATIC: false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
+  NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 5, // 更新内容缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
+  //客列表展现形式
+  POST_LIST_STYLE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
+  POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
+  POSTS_PER_PAGE: 12, // post counts per page
+  //博客列表排序
+  POSTS_SORT_BY: 'notion', // 排序方式 'date'按时间,'notion'由notion控制
+  //代码渲染样式
+  // PrismJs 代码相关
+  PRISM_JS_AUTO_LOADER: 'https://npm.elemecdn.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js',
+  PRISM_JS_PATH: 'https://npm.elemecdn.com/prismjs@1.29.0/components/',
+  PRISM_THEME_PATH: 'https://npm.elemecdn.com/prism-themes/themes/prism-a11y-dark.min.css', // 代码样式主题 更多参考 https://github.com/PrismJS/prism-themes
+  CODE_MAC_BAR: true, // 代码左上角显示mac的红黄绿图标
+  CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || 'false', // 是否显示行号
+  //左右布局颠倒
+  // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
+  LAYOUT_SIDEBAR_REVERSE: false,
+  // 鼠标点击烟花特效
+  FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || false, // 开关
+  // 烟花色彩，感谢 https://github.com/Vixcity 提交的色彩
+  FIREWORKS_COLOR: ['255, 20, 97', '24, 255, 146', '90, 135, 255', '251, 243, 140'],
+  //动态背景特效
+  // 樱花飘落特效
+  SAKURA: process.env.NEXT_PUBLIC_SAKURA || false, // 开关
+  
+  // 漂浮线段特效
+  NEST: process.env.NEXT_PUBLIC_NEST || false, // 开关
+  
+  // 动态彩带特效
+  FLUTTERINGRIBBON: process.env.NEXT_PUBLIC_FLUTTERINGRIBBON || false, // 开关
+  // 静态彩带特效
+  RIBBON: process.env.NEXT_PUBLIC_RIBBON || false, // 开关
+  
+  // 星空雨特效 黑夜模式才会生效
+  STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
+  // START ************网站字体*****************
+  
+  FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
+  // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
+  FONT_URL: [
+    // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
+    'https://fonts.googleapis.com/css?family=Bitter&display=swap',
+    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
+    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
+  ],
+  // 无衬线字体 例如'"LXGW WenKai"'
+  FONT_SANS: [
+    // '"LXGW WenKai"',
+    '"PingFang SC"',
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Hiragino Sans GB"',
+    '"Microsoft YaHei"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+    '"Segoe UI"',
+    '"Noto Sans SC"',
+    'HarmonyOS_Regular',
+    '"Helvetica Neue"',
+    'Helvetica',
+    '"Source Han Sans SC"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"'
+  ],
+  // 衬线字体 例如'"LXGW WenKai"'
+  FONT_SERIF: [
+    // '"LXGW WenKai"',
+    'Bitter',
+    '"Noto Serif SC"',
+    'SimSun',
+    '"Times New Roman"',
+    'Times',
+    'serif',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+    '"Apple Color Emoji"'
+  ],
+  FONT_AWESOME: process.env.NEXT_PUBLIC_FONT_AWESOME_PATH || 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', // font-awesome 字体图标地址; 可选 /css/all.min.css ， https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
+  
+  // END ************网站字体*****************
+
+  // START********代码相关********
+  // PrismJs 代码相关
+  PRISM_JS_PATH: 'https://npm.elemecdn.com/prismjs@1.29.0/components/',
+  PRISM_JS_AUTO_LOADER: 'https://npm.elemecdn.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js',
+  
+  // 代码主题 @see https://github.com/PrismJS/prism-themes
+  PRISM_THEME_PREFIX_PATH: 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.css', // 代码块默认主题
+  PRISM_THEME_SWITCH: process.env.NEXT_PUBLIC_PRISM_THEME_SWITCH || true, // 是否开启浅色/深色模式代码主题切换； 开启后将显示以下两个主题
+  PRISM_THEME_LIGHT_PATH: 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-solarizedlight.css', // 浅色模式主题
+  PRISM_THEME_DARK_PATH: 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css', // 深色模式主题
+  
+  CODE_MAC_BAR: process.env.NEXT_PUBLIC_CODE_MAC_BAR || true, // 代码左上角显示mac的红黄绿图标
+  CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || false, // 是否显示行号
+  CODE_COLLAPSE: process.env.NEXT_PUBLIC_CODE_COLLAPSE || true, // 是否折叠代码框
+  // END********代码相关********
+  CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || true, // 支持Menu 类型
+  NEXT_PUBLIC_MUSIC_PLAYER: true //可打开音乐播放器功能。
+  // 音乐播放插件
+  MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || false, // 是否使用音乐播放插件
+  MUSIC_PLAYER_VISIBLE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_VISIBLE || true, // 是否在左下角显示播放和切换，如果使用播放器，打开自动播放再隐藏，就会以类似背景音乐的方式播放，无法取消和暂停
+  MUSIC_PLAYER_AUTO_PLAY: process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || true, // 是否自动播放，不过自动播放时常不生效（移动设备不支持自动播放）
+  MUSIC_PLAYER_SHOW_LRC: process.env.NEXT_PUBLIC_MUSIC_PLAYER_SHOW_LRC || false, // 是否展示歌词（前提是有配置歌词路径，对 meting 无效）
+  MUSIC_PLAYER_CDN_URL: process.env.NEXT_PUBLIC_MUSIC_PLAYER_CDN_URL || 'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js',
+  MUSIC_PLAYER_ORDER: 'list', // 默认播放方式，顺序 list，随机 random
+  MUSIC_PLAYER_AUDIO_LIST: [ // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
+    {
+      name: '风を共に舞う気持ち',
+      artist: 'Falcom Sound Team jdk',
+      url: 'https://music.163.com/song/media/outer/url?id=731419.mp3',
+      cover: 'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+    },
+    {
+      name: '王都グランセル',
+      artist: 'Falcom Sound Team jdk',
+      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
+      cover: 'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+    }
+  ],
+  MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
+  MUSIC_PLAYER_METING_SERVER: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_SERVER || 'netease', // 音乐平台，[netease, tencent, kugou, xiami, baidu]
+  MUSIC_PLAYER_METING_ID: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_ID || '60198', // 对应歌单的 id
+  MUSIC_PLAYER_METING_LRC_TYPE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_LRC_TYPE || '1', // 可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）
+  //   ********挂件组件相关********
+  // Chatbase
+  CHATBASE_ID: process.env.NEXT_PUBLIC_CHATBASE_ID || 'q2n38cVm0CGtW0hXxIpDE', // 是否显示chatbase机器人 https://www.chatbase.co/
+
+
+
+
+
+
+
+
+
+  
   // 一个小插件展示你的facebook fan page~ @see https://tw.andys.pro/article/add-facebook-fanpage-notionnext
   FACEBOOK_PAGE_TITLE:
     process.env.NEXT_PUBLIC_FACEBOOK_PAGE_TITLE || null, // 邊欄 Facebook Page widget 的標題欄，填''則無標題欄 e.g FACEBOOK 粉絲團'
